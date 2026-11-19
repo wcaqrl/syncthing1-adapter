@@ -1,7 +1,5 @@
 manifest: ./lzc-manifest.yml
 icon: ./icon.png
 pkgout: ./dist
-buildscript: |
-  set -eu
-  source_image=$(sed -n 's/^    # upstream: //p' lzc-manifest.yml)
-  bash scripts/test-upgrade.sh "$source_image"
+# The Go builder expands variables in this YAML before running the shell.
+buildscript: bash scripts/test-upgrade.sh

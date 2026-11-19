@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-candidate=${1:-}
+candidate=${1-}
+if (( $# == 0 )); then
+  manifest="$(dirname -- "$0")/../lzc-manifest.yml"
+  candidate=$(sed -n 's/^[[:blank:]]*# upstream:[[:blank:]]*//p' "$manifest")
+fi
 if [[ ! $candidate =~ ^ghcr\.io/syncthing/syncthing:([0-9]+\.[0-9]+\.[0-9]+)@sha256:[a-f0-9]{64}$ ]]; then
   echo 'Expected the selected official Syncthing image with an immutable digest.' >&2
   exit 2
