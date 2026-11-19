@@ -1,0 +1,52 @@
+version: 2
+
+project:
+  root: .
+  build_config: lzc-build.yml
+  package_file: package.yml
+  output: dist/cloud.lazycat.app.syncthing1.lpk
+  target_arch: amd64
+
+source:
+  kind: git
+  url: https://github.com/syncthing/syncthing.git
+  select:
+    strategy: semver-tag
+    tag_regex: '^v[0-9]+\.[0-9]+\.[0-9]+$'
+
+changelog:
+  mode: github-release
+  git_url: https://github.com/syncthing/syncthing.git
+
+state:
+  file: .lazycat-action.lock.yml
+
+update:
+  strategy: publish
+  allow_downgrade: false
+
+build:
+  run_buildscript: true
+  prepare:
+    mode: images
+
+images:
+  - id: syncthing
+    target: service
+    service: syncthing
+    # Git tags are vX.Y.Z while official OCI image tags are X.Y.Z.
+    source: ghcr.io/syncthing/syncthing:{source_version}
+    delivery:
+      mode: lazycat
+
+stores:
+  official:
+    enabled: true
+    create_if_missing: false
+    skip_if_version_exists: true
+    continue_if_newer_version: true
+    retry:
+      enabled: true
+      max_attempts: 5
+      initial_delay: 2s
+      max_delay: 30s

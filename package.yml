@@ -1,0 +1,28 @@
+package: cloud.lazycat.app.syncthing1
+# Current store package version. The update workflow advances this on packaging.
+version: 2.0.11
+name: Syncthing
+description: 在设备之间自动同步文件的开源点对点工具。
+author: Syncthing Foundation
+license: MPL-2.0
+homepage: https://syncthing.net/
+min_os_version: 1.5.0
+locales:
+  zh-CN:
+    name: Syncthing
+    description: 在设备之间自动同步文件的开源点对点工具。
+    usage: |
+      从微服启动器打开 Syncthing，添加远程设备和同步文件夹。
+      配置、设备密钥和索引沿用旧版持久化目录。需要持久保存的同步文件可放在 /var/syncthing 下，避开 config 子目录。
+      手动连接时，在对端使用 tcp://<应用实际域名>:22000，并在两端确认设备 ID。
+  en-US:
+    name: Syncthing
+    description: An open-source peer-to-peer tool for keeping files synchronized across devices.
+    usage: |
+      Open Syncthing from the LazyCat launcher and add a remote device and a folder.
+      Configuration, device keys and the index retain their existing storage. Store files that should persist under /var/syncthing, outside the config directory.
+      For a manual peer address, use tcp://<assigned-app-domain>:22000 and confirm the device ID on both sides.
+permissions:
+  required:
+    - net.internet
+    - net.lan

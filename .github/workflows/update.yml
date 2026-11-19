@@ -1,0 +1,48 @@
+name: Update Syncthing for LazyCat
+run-name: ${{ (github.event_name == 'push' || inputs.dry-run) && 'Syncthing → LazyCat [仅检查]' || 'Syncthing → LazyCat [转存、升级验证、打包并送审]' }}
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/update.yml
+      - scripts/**
+      - lazycat-action.yml
+      - lzc-build.yml
+      - lzc-manifest.yml
+      - package.yml
+      - icon.png
+  schedule:
+    # 04:41 UTC = 12:41 Asia/Shanghai.
+    - cron: '41 4 * * *'
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 勾选仅检查，取消勾选后转存镜像、验证升级、打包并送审。
+        type: boolean
+        default: true
+      retry-rejected:
+        description: 修复后重新提交被拒绝的源版本，须同时取消仅检查。
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: syncthing1-lazycat-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    uses: wcaqrl/lazycat-action/.github/workflows/lazycat.yml@v1
+    with:
+      config: lazycat-action.yml
+      operation: auto
+      runner: ubuntu-24.04
+      toolchains: docker
+      enable-qemu: false
+      dry-run: ${{ github.event_name == 'push' || inputs.dry-run || false }}
+      retry-rejected: ${{ github.event_name == 'workflow_dispatch' && inputs.retry-rejected || false }}
+    secrets: inherit
