@@ -14,8 +14,8 @@
 - LPK v2 要求懒猫系统 1.5.0 或以上。适配器沿用原包的 `linux/amd64` 镜像架构、`syncthing` 子域名和多实例部署。现用字段为 `multi_instance: true`。
 - 原有 `/lzcapp/var/conf:/var/syncthing` 挂载继续存放配置、索引、设备证书和同步文件。有效 UID/GID 仍为 `0:1000`，以便读取旧实例已有的文件。
 - 管理界面通过微服登录保护的 HTTP 入口打开。旧实例自行配置的 Syncthing GUI 密码保留。TCP `22000` 仅用于 Syncthing 设备之间的同步，手动配置对端时使用启动器分配给当前实例的域名。
-- 正式打包脚本会运行真实旧镜像，写入一个测试文件和同步目录，然后用所选候选镜像接管同一测试卷。升级检查设备 ID、配置、文件、索引和管理页。测试容器不联网，也不访问用户目录。
+- 正式打包脚本使用固定摘要的官方公开 `2.0.10` 镜像建立升级测试数据。该镜像与旧包镜像的文件层和运行设置一致，测试沿用旧包的环境变量。随后用所选候选镜像接管同一测试卷，检查设备 ID、配置、文件、索引和管理页。测试容器不联网，也不访问用户目录。
 
-本地可用 `bash scripts/test-upgrade.sh <带摘要的官方候选镜像>` 重现升级检查。通用工作流会从已选镜像的来源摘要自动传入此参数。
+本地可用 `bash scripts/test-upgrade.sh <带摘要的官方候选镜像>` 重现升级检查。正式打包时，脚本从 Manifest 的镜像来源注释读取候选镜像。
 
 参考 [懒猫 LPK v2 规范](https://developer.lazycat.cloud/spec/lpk-format.html)、[多实例](https://developer.lazycat.cloud/advanced-multi-instance.html) 和 [Syncthing 官方容器文档](https://github.com/syncthing/syncthing/blob/main/README-Docker.md)。

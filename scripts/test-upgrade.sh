@@ -11,7 +11,9 @@ if [[ ! $candidate =~ ^ghcr\.io/syncthing/syncthing:([0-9]+\.[0-9]+\.[0-9]+)@sha
   exit 2
 fi
 version="v${BASH_REMATCH[1]}"
-legacy='registry.lazycat.cloud/medium/rich_lzc/syncthing@sha256:9e16f9addfc43cafe2ee053e49d3d7cb2446cfdaf8264963ba298cedd0b34b50'
+# The public amd64 image has the same filesystem layers and effective root
+# entrypoint as the old store image. CI can pull it without registry credentials.
+legacy='ghcr.io/syncthing/syncthing:2.0.10@sha256:c9557fc2aac2ba31dedc57017f959ad86be45126a17046355843d973e09f5a3f'
 temp=$(mktemp -d -t syncthing1-upgrade.XXXXXXXX)
 prefix=$(basename "$temp")
 container="$prefix-server"
