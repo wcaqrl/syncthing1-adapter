@@ -1,0 +1,39 @@
+version: 2
+source:
+    kind: git
+    version: 2.1.7
+    ref: refs/tags/v2.1.7
+    revision: d6d0181f7d466381c4b39ec8fd944c364f939b32
+    tag: v2.1.7
+fingerprint: sha256:65d874ddea2a8e71520d1caaba9b5396a83a08a30cebdec1ef4674279c8f2c0f
+status: packaged
+images:
+    - id: syncthing
+      source_ref: ghcr.io/syncthing/syncthing:2.1.7@sha256:c28e86f5173bacc429aef92af915b5c4fac56e1a9dcd3875855fd51f664d0414
+      source_digest: sha256:c28e86f5173bacc429aef92af915b5c4fac56e1a9dcd3875855fd51f664d0414
+      runtime_ref: registry.lazycat.cloud/peter/syncthing/syncthing:707f3fdd8c55b3b2
+application:
+    package: cloud.lazycat.app.syncthing1
+    version: 2.1.7
+    lpk_sha256: 51792c8cc72d5772f0e5989875a989002258048ad40dc430d451953e35356522
+    changelog: |-
+        Upstream 2.1.7
+        ## What's Changed
+
+        Built with Go 1.27.3.
+
+        ### Fixes
+        * fix: handle missing max-sequence file entries by @calmh in https://github.com/syncthing/syncthing/pull/10912
+        * fix(sqlite): avoid early garbage collection of deleted recv-enc files by @calmh in https://github.com/syncthing/syncthing/pull/10916
+        * fix(sqlite): do not generate unbounded prepared statements (ref #10913) by @calmh in https://github.com/syncthing/syncthing/pull/10915
+        * fix(discover): skip unnecessary identical global announce updates; obey retry-after by @calmh in https://github.com/syncthing/syncthing/pull/10918
+        * fix(protocol): convert panics on bad data to protocol errors by @calmh in https://github.com/syncthing/syncthing/pull/10923
+        * fix(model): verify local change before applying metadata shortcut (fixes #10924) by @calmh in https://github.com/syncthing/syncthing/pull/10925
+        * fix(model): ensure parent ownership is copied properly (fixes #8399) by @calmh in https://github.com/syncthing/syncthing/pull/10926
+        * fix(model): properly compare blocks when reconciling receive-only (fixes #10928) by @calmh in https://github.com/syncthing/syncthing/pull/10929
+        ### Other
+        * build(deps): update dependencies by @calmh in https://github.com/syncthing/syncthing/pull/10917
+        * chore(protocol): add protovalidate validation of incoming messages, reasonable limits by @calmh in https://github.com/syncthing/syncthing/pull/10838
+
+        **Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.1.6...v2.1.7
+packaged_at: 2026-11-19T09:44:22.177034823Z

@@ -10,11 +10,11 @@ application:
       description: Syncthing peer synchronization
       service: syncthing
       port: 22000
-
 services:
   syncthing:
     # The executor replaces this store baseline with the selected official copy.
-    image: registry.lazycat.cloud/medium/rich_lzc/syncthing:9e16f9addfc43caf
+    # upstream: ghcr.io/syncthing/syncthing:2.1.7@sha256:c28e86f5173bacc429aef92af915b5c4fac56e1a9dcd3875855fd51f664d0414
+    image: registry.lazycat.cloud/peter/syncthing/syncthing:707f3fdd8c55b3b2
     environment:
       # The legacy container used UID 0 and the image's default GID 1000.
       # Preserve access to existing keys and files with restricted permissions.

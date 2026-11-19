@@ -1,6 +1,6 @@
 package: cloud.lazycat.app.syncthing1
 # Current store package version. The update workflow advances this on packaging.
-version: 2.0.11
+version: 2.1.7
 name: Syncthing
 description: 在设备之间自动同步文件的开源点对点工具。
 author: Syncthing Foundation
